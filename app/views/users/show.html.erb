@@ -19,24 +19,52 @@
         <%= @user.followers.count() %>
       </dd>
       <dd>
-        <% if @current_user.id != @user.id %>
+        <% if session.fetch(:user_id).present? == TRUE %>
+          <% if @current_user.id != @user.id %>
 
-          <% fr = FollowRequest.where({ :sender_id => @current_user.id, :recipient_id => @user.id }).at(0) %>
+            <% fr = FollowRequest.where({ :sender_id => @current_user.id, :recipient_id => @user.id }).at(0) %>
 
-          <% if @current_user.sent_follow_requests.where({ :recipient_id => @user.id}).at(0) == nil  %>
-            <form action="/insert_follow_request" method="post">
-              <input id="browser_sender_id" type="hidden" name="input_sender_id" value=<%= @current_user.id %>>
-              <input id="browser_recipient_id" type="hidden" name="input_recipient_id" value=<%= @user.id %>>
-              <button>Follow</button>
-            </form>
-          <% elsif fr.status == "pending" %>
-            Request sent. <a href="/delete_follow_request/<%= fr.id%>">Cancel</a>
-          <% else  %>
-            <% fr_id = FollowRequest.where({ :sender_id => @current_user.id, :recipient_id => @user.id }).at(0).id %>
-            <a href="/delete_follow_request/<%= fr_id%>">Unfollow</a>
+            <% if @current_user.sent_follow_requests.where({ :recipient_id => @user.id}).at(0) == nil  %>
+              <form action="/insert_follow_request" method="post">
+                <input id="browser_sender_id" type="hidden" name="input_sender_id" value=<%= @current_user.id %>>
+                <input id="browser_recipient_id" type="hidden" name="input_recipient_id" value=<%= @user.id %>>
+                <button>Follow</button>
+              </form>
+            <% elsif fr.status == "pending" %>
+              Request sent. <a href="/delete_follow_request/<%= fr.id%>">Cancel</a>
+            <% else  %>
+              <% fr_id = FollowRequest.where({ :sender_id => @current_user.id, :recipient_id => @user.id }).at(0).id %>
+              <a href="/delete_follow_request/<%= fr_id%>">Unfollow</a>
+            <% end %>
           <% end %>
         <% end %>
       </dd>
+
+      <% if session.fetch(:user_id).present? == TRUE %>
+          <% if @current_user.id == @user.id && FollowRequest.where({ :recipient_id => @user.id, :status => "pending"  }).at(0) != nil %>
+            <dd>
+              <h4>Pending follow requests</h4>
+              <% FollowRequest.where({ :recipient_id => @user.id, :status => "pending"  }).each do |request|  %>
+                <ul>
+                  <li><%= User.where({ :id => request.sender_id}).at(0).username  %>
+                    <form action="/modify_follow_request/<%= request.id %>" method="post">
+                      <input id="req_status" type="hidden" name="req_status" value="accepted">
+                      <input id="req_sender_id" type="hidden" name="req_sender_id" value=<%= request.sender_id %>>
+                      <input id="req_recipient_id" type="hidden" name="req_recipient_id" value=<%= request.recipient_id %>>
+                      <button>Accept</button>
+                    </form>
+                    <form action="/modify_follow_request/<%= request.id %>" method="post">
+                      <input id="req_status" type="hidden" name="req_status" value="rejected">
+                      <input id="req_sender_id" type="hidden" name="req_sender_id" value=<%= request.sender_id %>>
+                      <input id="req_recipient_id" type="hidden" name="req_recipient_id" value=<%= request.recipient_id %>>
+                      <button>Reject</button>
+                    </form>
+                  </li>
+                </ul>
+              <% end %>
+            </dd>
+          <% end %>
+      <% end %>
 
       <dt>
         Following
@@ -45,26 +73,28 @@
         <%= @user.following.count() %>
       </dd>
 
-      <% if @current_user.id == @user.id %>
-        <dt>
-          Edit user
-        </dt>
-        <dd>
-          <form action="/update_user/<%= @current_user.id %>" method="post">
-            <div>
-              <label for="browser_username">Username</label>
-              <input id="browser_username" type="text" name="input_username" value=<%= @current_user.username %>>
-            </div>
+      <% if session.fetch(:user_id).present? == TRUE %>
+        <% if @current_user.id == @user.id %>
+          <dt>
+            Edit user
+          </dt>
+          <dd>
+            <form action="/update_user/<%= @current_user.id %>" method="post">
+              <div>
+                <label for="browser_username">Username</label>
+                <input id="browser_username" type="text" name="input_username" value=<%= @current_user.username %>>
+              </div>
 
-            <div>
-              <%= hidden_field_tag :input_private, false %>
-              <label for="browser_private">Private</label>
-              <input id="browser_private" name="input_private" type="checkbox" checked=<%= @current_user.private %>>
-            </div>
+              <div>
+                <%= hidden_field_tag :input_private, false %>
+                <label for="browser_private">Private</label>
+                <input id="browser_private" name="input_private" type="checkbox" checked=<%= @current_user.private %>>
+              </div>
 
-            <button>Update user</button>
-          </form>
-        </dd>
+              <button>Update user</button>
+            </form>
+          </dd>
+        <% end %>
       <% end %>
 
     </dl>

@@ -51,12 +51,29 @@ class UsersController < ApplicationController
     matching_users = User.where({ :username => the_username })
 
     @user = matching_users.at(0)
-
-    if @user.private == false || @user.id = @current_user.id
+    
+    if @user.private == true
+      if session.fetch(:user_id).present? == FALSE 
+        redirect_to("/users", {:alert => "You have to sign in first."})
+      elsif @user.id != @current_user.id
+        if @user.accepted_received_follow_requests.where({ :sender_id => @current_user.id }).at(0) == nil
+          redirect_to("/users", {:alert => "You're not authorized for that."}) 
+        else
+          render({ :template => "users/show.html.erb" })
+        end
+      else
+        render({ :template => "users/show.html.erb" })
+      end
+    else
       render({ :template => "users/show.html.erb" })
-    elsif @user.private == true
-      redirect_to("/users", {:alert => "You're not authorized for that."}) 
     end
+
+
+    #if @user.private == false || @user.id = @current_user.id
+    # render({ :template => "users/show.html.erb" })
+    # else @user.private == true
+    #  redirect_to("/users", {:alert => "You're not authorized for that."}) 
+    # end
 
   end
 
