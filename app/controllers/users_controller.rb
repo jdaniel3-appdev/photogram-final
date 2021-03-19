@@ -136,5 +136,32 @@ class UsersController < ApplicationController
     
   end
 
+  def show_liked_pics
+    the_username = params.fetch("the_username")
+
+    this_user = User.where({ :username => the_username })
+
+    @user = this_user.at(0)
+
+    @user_liked_pics = @user.liked_photos
+
+    render({ :template => "users/show_liked_pics.html.erb" })
+    
+  end
+
+  def show_discover
+    the_username = params.fetch("the_username")
+
+    this_user = User.where({ :username => the_username })
+
+    @user = this_user.at(0)
+
+    @user_discover_pics = @user.discover
+
+    render({ :template => "users/show_discover.html.erb" })
+    
+  end
+
+
 
 end
