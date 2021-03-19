@@ -1,57 +1,15 @@
 <div>
   <div>
     <h1>
-      Photo #<%= @the_photo.id %> details
+      Photo Details
     </h1>
-
-    <div>
-      <div>
-        <a href="/photos">
-          Go back
-        </a>
-      </div>
-
-      <div>
-        <a href="/delete_photo/<%= @the_photo.id %>">
-          Delete photo
-        </a>
-      </div>
-    </div>
 
     <dl>
       <dt>
         Image
       </dt>
       <dd>
-        <%= @the_photo.image %>
-      </dd>
-
-      <dt>
-        Owner
-      </dt>
-      <dd>
-        <%= @the_photo.owner_id %>
-      </dd>
-
-      <dt>
-        Likes count
-      </dt>
-      <dd>
-        <%= @the_photo.likes_count %>
-      </dd>
-
-      <dt>
-        Comments count
-      </dt>
-      <dd>
-        <%= @the_photo.comments_count %>
-      </dd>
-
-      <dt>
-        Comments count
-      </dt>
-      <dd>
-        <%= @the_photo.comments_count %>
+        <img src="<%= @the_photo.image %>">
       </dd>
 
       <dt>
@@ -62,18 +20,56 @@
       </dd>
 
       <dt>
-        Created at
+        Owner
+      </dt>
+      <dd>
+        <%= @the_photo.poster.username %>
+      </dd>
+
+      <dt>
+        Posted
       </dt>
       <dd>
         <%= time_ago_in_words(@the_photo.created_at) %> ago
       </dd>
 
       <dt>
-        Updated at
+        Likes count
       </dt>
       <dd>
-        <%= time_ago_in_words(@the_photo.updated_at) %> ago
+        <%= @the_photo.likes.count() %>
       </dd>
+
+      <dt>
+        Comments count
+      </dt>
+      <dd>
+        <%= @the_photo.comments.count() %>
+      </dd>
+
+      <dt>
+        Fans
+      </dt>
+      <dd>
+
+        <% @the_photo.fans.each do |fan| %>
+        <%= fan.username %>
+        
+        <% end %>
+      </dd>
+
+      <dt>
+        Add a fan
+      </dt>
+      <dd>
+        <form action="/insert_like" method="post">
+                <input id="browser_photo_id" type="hidden" name="input_photo_id" value=<%= @the_photo.id %>>
+                <input id="browser_fan_id" type="hidden" name="input_fan_id" value=<%= @current_user.id %>>
+                <button>Like</button>
+              </form>
+      </dd>
+
+
     </dl>
   </div>
 </div>
