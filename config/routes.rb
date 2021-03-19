@@ -80,11 +80,11 @@ Rails.application.routes.draw do
 
   # Routes for the User resource:
 
-  
-
   get("/user_sign_up", {:controller => "users", :action => "new_registration_form" })
   get("/user_sign_out", {:controller => "users", :action => "toast_cookies" })
   get("/user_sign_in", {:controller => "users", :action => "new_session_form" })
+
+  get("/edit_user_profile", {:controller => "users", :action => "edit_profile_form" })
 
   post("/verify_credentials", {:controller => "users", :action => "authenticate" })
 

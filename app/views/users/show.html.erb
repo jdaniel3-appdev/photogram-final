@@ -1,7 +1,7 @@
 <div>
   <div>
     <h1>
-      User #<%= @the_user.id %> details
+      User #<%= @user.id %> details
     </h1>
 
     <div>
@@ -12,7 +12,7 @@
       </div>
 
       <div>
-        <a href="/delete_user/<%= @the_user.id %>">
+        <a href="/delete_user/<%= @user.id %>">
           Delete user
         </a>
       </div>
@@ -23,56 +23,56 @@
         Username
       </dt>
       <dd>
-        <%= @the_user.username %>
+        <%= @user.username %>
       </dd>
 
       <dt>
         Email
       </dt>
       <dd>
-        <%= @the_user.email %>
+        <%= @user.email %>
       </dd>
 
       <dt>
         Password digest
       </dt>
       <dd>
-        <%= @the_user.password_digest %>
+        <%= @user.password_digest %>
       </dd>
 
       <dt>
         Comments count
       </dt>
       <dd>
-        <%= @the_user.comments_count %>
+        <%= @user.comments_count %>
       </dd>
 
       <dt>
         Likes count
       </dt>
       <dd>
-        <%= @the_user.likes_count %>
+        <%= @user.likes_count %>
       </dd>
 
       <dt>
         Private
       </dt>
       <dd>
-        <%= @the_user.private %>
+        <%= @user.private %>
       </dd>
 
       <dt>
         Created at
       </dt>
       <dd>
-        <%= time_ago_in_words(@the_user.created_at) %> ago
+        <%= time_ago_in_words(@user.created_at) %> ago
       </dd>
 
       <dt>
         Updated at
       </dt>
       <dd>
-        <%= time_ago_in_words(@the_user.updated_at) %> ago
+        <%= time_ago_in_words(@user.updated_at) %> ago
       </dd>
     </dl>
   </div>
@@ -87,13 +87,13 @@
       Edit user
     </h2>
 
-    <form action="/modify_user/<%= @the_user.id %>"  method="post" >
+    <form action="/modify_user/<%= @user.id %>"  method="post" >
       <div>
         <label for="username_box">
           Username
         </label>
 
-        <input type="text" id="username_box" name="query_username" value="<%= @the_user.username %>">
+        <input type="text" id="username_box" name="query_username" value="<%= @user.username %>">
       </div>
 
       <div>
@@ -101,7 +101,7 @@
           Email
         </label>
 
-        <input type="text" id="email_box" name="query_email" value="<%= @the_user.email %>">
+        <input type="text" id="email_box" name="query_email" value="<%= @user.email %>">
       </div>
 
       <div>
@@ -109,7 +109,7 @@
           Password digest
         </label>
 
-        <input type="text" id="password_digest_box" name="query_password_digest" value="<%= @the_user.password_digest %>">
+        <input type="text" id="password_digest_box" name="query_password_digest" value="<%= @user.password_digest %>">
       </div>
 
       <div>
@@ -117,7 +117,7 @@
           Comments count
         </label>
 
-        <input type="text" id="comments_count_box" name="query_comments_count" value="<%= @the_user.comments_count %>">
+        <input type="text" id="comments_count_box" name="query_comments_count" value="<%= @user.comments_count %>">
       </div>
 
       <div>
@@ -125,11 +125,11 @@
           Likes count
         </label>
 
-        <input type="text" id="likes_count_box" name="query_likes_count" value="<%= @the_user.likes_count %>">
+        <input type="text" id="likes_count_box" name="query_likes_count" value="<%= @user.likes_count %>">
       </div>
 
       <div>
-        <input type="checkbox" id="private_box" name="query_private" value="1" <%= "checked" if @the_user.private %>>
+        <input type="checkbox" id="private_box" name="query_private" value="1" <%= "checked" if @user.private %>>
 
         <label for="private_box">
             Private

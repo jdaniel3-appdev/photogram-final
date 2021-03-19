@@ -27,7 +27,7 @@
         <% end %>
 
         <% if session.fetch(:user_id).present? == TRUE %>
-          <li><a href="/edit_user_profile"><%= session.fetch(:user_id) %></a></li>
+          <li><a href="/edit_user_profile"><%= User.where({ :id => session.fetch(:user_id)}).at(0).username %></a></li>
           <li><a href="/user_sign_out">Sign Out</a></li>
         <% end %>
 

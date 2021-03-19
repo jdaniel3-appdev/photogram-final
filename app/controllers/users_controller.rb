@@ -17,6 +17,11 @@ class UsersController < ApplicationController
     render({ :template => "users/signin_form.html.erb" })
   end
 
+  def edit_profile_form
+    
+    render({ :template => "users/edit_user_profile.html.erb" })
+  end
+
   def toast_cookies
     reset_session
     
@@ -52,9 +57,16 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new
-    @user.username = params.fetch("input_username")
+    @user.email = params.fetch("input_email")
     @user.password = params.fetch("input_password")
     @user.password_confirmation = params.fetch("input_password_confirmation")
+    @user.username = params.fetch("input_username")
+
+    if params.fetch("input_private") == nil || params.fetch("input_private") == false
+      @user.private = false
+    else 
+      @user.private = params.fetch("input_private")
+    end  
 
     save_status = @user.save
 
@@ -71,10 +83,10 @@ class UsersController < ApplicationController
     the_id = params.fetch("the_user_id")
     the_user = User.where({ :id => the_id }).at(0)
 
-    the_user.username = params.fetch("input_username")
     the_user.email = params.fetch("input_email")
-    the_user.password_digest = params.fetch("input_password")
-    the_user.password_digest = params.fetch("input_password_confirmation")
+    the_user.password = params.fetch("input_password")
+    the_user.password_confirmation = params.fetch("input_password_confirmation")
+    the_user.username = params.fetch("input_username")
     the_user.private = params.fetch("input_private", false)
 
     if the_user.valid?

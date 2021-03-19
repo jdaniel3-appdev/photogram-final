@@ -1,0 +1,36 @@
+<h1>Edit User Account</h1>
+
+<form action="/update_user/<%= @current_user.id %>" method="post">
+
+  <div>
+    <label for="browser_email">Email</label>
+    <input id="browser_email" type="text" name="input_email" value=<%= @current_user.email %>>
+  </div>
+
+  <div>
+    <label for="browser_password">Password</label>
+    <input id="browser_password" type="password" name="input_password" placeholder="Enter a password...">
+  </div>
+
+  <div>
+    <label for="browser_password_confirmation">Password Confirmation</label>
+    <input id="browser_password_confirmation" type="password" name="input_password_confirmation" placeholder="Confirm your password...">
+  </div>
+
+  <div>
+    <label for="browser_username">Username</label>
+    <input id="browser_username" type="text" name="input_username" value=<%= @current_user.username %>>
+  </div>
+
+  <div>
+    <% if @current_user.private == true %>
+      <% check = 1 %>
+    <% else %> 
+      <% check = 0 %>
+    <% end %> 
+    <label for="browser_private">Private</label>
+    <input id="browser_private" name="input_private" type="checkbox" value=<%= check %>>
+  </div>
+
+  <button>Update Account</button>
+</form>
