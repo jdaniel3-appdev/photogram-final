@@ -23,14 +23,10 @@
   </div>
 
   <div>
-    <% if @current_user.private == true %>
-      <% check = true %>
-    <% else %> 
-      <% check = false %>
-    <% end %> 
+    <%= hidden_field_tag :input_private, false %>
     <label for="browser_private">Private</label>
-    <input id="browser_private" name="input_private" type="checkbox" checked=<%= check %>>
+    <input id="browser_private" name="input_private" type="checkbox" checked=<%= @current_user.private %>>
   </div>
 
-  <button>Update Account</button>
+  <button>Update account</button>
 </form>

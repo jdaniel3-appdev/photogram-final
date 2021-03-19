@@ -29,10 +29,10 @@ class UsersController < ApplicationController
   end
 
   def authenticate
-    un = params.fetch("input_username")
+    un = params.fetch("input_email")
     pw = params.fetch("input_password")
 
-    user = User.where({ :username => un}).at(0)
+    user = User.where({ :email => un}).at(0)
     if user == nil
       redirect_to("/user_sign_in", {:alert => "No such user on record"})
     else
@@ -61,7 +61,7 @@ class UsersController < ApplicationController
     @user.password = params.fetch("input_password")
     @user.password_confirmation = params.fetch("input_password_confirmation")
     @user.username = params.fetch("input_username")
-    @user.private = params.fetch("input_private")  
+    @user.private = params.fetch("input_private")
 
     save_status = @user.save
 
