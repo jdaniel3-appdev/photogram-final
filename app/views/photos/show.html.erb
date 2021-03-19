@@ -109,4 +109,63 @@
 
 <hr>
 
+<div>
+  <div>
+    <h2>
+      Comments
+    </h2>
+
+
+  <div>
+    <table border="1">
+      <tr>
+
+        <th>
+          Commenter
+        </th>
+
+        <th>
+          Comment
+        </th>
+
+        <th>
+          Posted
+        </th>
+
+      </tr>
+
+      <% @the_photo.comments.each do |a_comment| %>
+        <tr>
+
+          <td>
+            <%= a_comment.commenter.username %>
+          </td>
+
+          <td>
+            <%= a_comment.body %>
+          </td>
+
+          <td>
+            <%= time_ago_in_words(a_comment.created_at) %> ago
+          </td>
+
+        </tr>
+      <% end %>
+    </table>
+  </div>
+
+  <h3>Add a new comment</h3>
+  <div>
+    <form action="/insert_comment" method="post">
+        <input type="hidden" value="<%= @the_photo.id %>" name = "input_photo_id">
+        <input type="hidden" value="<%= @current_user.id %>" name = "input_author_id">
+        <label for="comment_box">Comment</label>
+        <textarea id="comment_box" name="input_comment" rows="2" placeholder="Enter a comment..."></textarea>
+    
+        <button>Add comment</button>
+      </form>
+  </div>
+
+</div>
+
 <hr>
