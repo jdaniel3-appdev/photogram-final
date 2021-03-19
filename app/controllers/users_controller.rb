@@ -122,4 +122,19 @@ class UsersController < ApplicationController
 
     redirect_to("/users", { :notice => "User deleted successfully."} )
   end
+
+  def show_feed
+    the_username = params.fetch("the_username")
+
+    this_user = User.where({ :username => the_username })
+
+    @user = this_user.at(0)
+
+    @user_feed_pics = @user.feed
+
+    render({ :template => "users/show_feed.html.erb" })
+    
+  end
+
+
 end

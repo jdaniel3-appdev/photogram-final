@@ -1,0 +1,110 @@
+<div>
+    <h1>
+      <%= @user.username %>
+    </h1>
+
+    <dl>
+      <dt>
+        Private
+      </dt>
+      <dd>
+        <%= @user.private %>
+      </dd>
+
+      <dt>
+        Followers
+      </dt>
+      <dd>
+        <%= @user.followers.count() %>
+      </dd>
+
+      <dt>
+        Following
+      </dt>
+
+      <dd>
+        <%= @user.following.count() %>
+      </dd>
+    </dl>
+  </div>
+
+  <div>
+    <ul>
+      <li><a href="/users/<%= @user.username %>">Profile</a></li>
+      <li><a href="/users/<%= @user.username %>/liked_photos">Liked photos</a></li>
+      <li><a href="/users/<%= @user.username %>/feed">Feed</a></li>
+      <li><a href="/users/<%= @user.username %>/discover">Discover</a></li>
+    </ul>
+  </div>
+
+  <hr>
+
+<div>
+  <div>
+    <h2>
+      Feed (<%= @user_feed_pics.count %>)
+    </h2>
+
+    <div>
+    <table border="1">
+      <tr>
+
+        <th>
+          Image
+        </th>
+
+        <th>
+          Owner
+        </th>
+
+        <th>
+          Caption
+        </th>
+
+        <th>
+          Posted
+        </th>
+
+        <th>
+          Likes
+        </th>
+
+        <th>
+          Details
+        </th>
+
+      </tr>
+
+      <% @user_feed_pics.each do |a_photo| %>
+        <tr>
+
+          <td>
+            <img src="<%= a_photo.image %>">
+          </td>
+
+          <td>
+            <%= a_photo.poster.username %>
+          </td>
+
+          <td>
+            <%= a_photo.caption %>
+          </td>
+
+          <td>
+            <%= time_ago_in_words(a_photo.created_at) %> ago
+          </td>
+
+          <td>
+            <%= a_photo.likes.count() %>
+          </td>
+
+          <td>
+            <a href="/photos/<%= a_photo.id %>">
+              Show details
+            </a>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
