@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   post("/modify_follow_request/:path_id", { :controller => "follow_requests", :action => "update" })
   
   # DELETE
-  get("/delete_follow_request/:path_id", { :controller => "follow_requests", :action => "destroy" })
+  get("/delete_follow_request/:fr_id", { :controller => "follow_requests", :action => "destroy" })
 
   #------------------------------
 
