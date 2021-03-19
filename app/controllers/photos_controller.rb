@@ -1,10 +1,25 @@
 class PhotosController < ApplicationController
   def index
-    matching_photos = Photo.all
+    
+    public_posters = Array.new
+    Photo.all.each do |photo|
+      public_posters.push(User.where({ :id => photo.owner_id, :private => false }))
+      public_posters = public_posters.reject(&:blank?)
+    end
 
-    @list_of_photos = matching_photos.order({ :created_at => :desc })
+    if public_posters.length() > 0
 
+      @public_photos = Array.new
+      public_posters.at(0).each do |poster|
+        @public_photos.push(Photo.where({ :owner_id => poster.id }).at(0))
+      end
+    
     render({ :template => "photos/index.html.erb" })
+
+    else
+      @public_photos = Array.new
+      render({ :template => "photos/index.html.erb" })
+    end
   end
 
   def show
@@ -19,12 +34,9 @@ class PhotosController < ApplicationController
 
   def create
     the_photo = Photo.new
-    the_photo.image = params.fetch("query_image")
-    the_photo.owner_id = params.fetch("query_owner_id")
-    the_photo.likes_count = params.fetch("query_likes_count")
-    the_photo.comments_count = params.fetch("query_comments_count")
-    the_photo.comments_count = params.fetch("query_comments_count")
-    the_photo.caption = params.fetch("query_caption")
+    the_photo.image = params.fetch(:image)
+    the_photo.owner_id = @current_user.id
+    the_photo.caption = params.fetch("input_caption")
 
     if the_photo.valid?
       the_photo.save

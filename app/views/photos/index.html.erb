@@ -1,102 +1,37 @@
 <div>
   <div>
     <h1>
-      List of all photos
+      List of photos
     </h1>
   </div>
 </div>
 
 <hr>
 
-<div>
+<% if session.fetch(:user_id).present? == TRUE %>
   <div>
-    <h2>
-      Add a new photo
-    </h2>
+    <div>
+      <form action="/insert_photo" method="post" class="form-horizontal" enctype="multipart/form-data">
+        <label for="image">Image</label>
+        <input type="file" id="image" name="image" class="form-control">
 
-    <form action="/insert_photo" method="post">
-      <div>
-        <label for="image_box">
-          Image
-        </label>
-
-        <input type="text" id="image_box" name="query_image">
-      </div>
-
-      <div>
-        <label for="owner_id_box">
-          Owner
-        </label>
-
-        <input type="text" id="owner_id_box" name="query_owner_id">
-      </div>
-
-      <div>
-        <label for="likes_count_box">
-          Likes count
-        </label>
-
-        <input type="text" id="likes_count_box" name="query_likes_count">
-      </div>
-
-      <div>
-        <label for="comments_count_box">
-          Comments count
-        </label>
-
-        <input type="text" id="comments_count_box" name="query_comments_count">
-      </div>
-
-      <div>
-        <label for="comments_count_box">
-          Comments count
-        </label>
-
-        <input type="text" id="comments_count_box" name="query_comments_count">
-      </div>
-
-      <div>
-        <label for="caption_box">
-          Caption
-        </label>
-
-        <textarea id="caption_box" name="query_caption" rows="3"></textarea>
-      </div>
-
-      <button>
-        Create photo
-      </button>
-    </form>
+        <label for="caption_box">Caption</label>
+        <textarea id="caption_box" name="input_caption" rows="2" placeholder="Enter a caption for the photo..."></textarea>
+    
+        <button>Add photo</button>
+      </form>
+    </div>
   </div>
-</div>
+<% end %>
 
 <hr>
 <div>
   <div>
-    <table>
+    <table border="1">
       <tr>
-        <th>
-          ID
-        </th>
 
         <th>
           Image
-        </th>
-
-        <th>
-          Owner
-        </th>
-
-        <th>
-          Likes count
-        </th>
-
-        <th>
-          Comments count
-        </th>
-
-        <th>
-          Comments count
         </th>
 
         <th>
@@ -104,60 +39,54 @@
         </th>
 
         <th>
-          Created at
+          Owner
         </th>
 
         <th>
-          Updated at
+          Posted
         </th>
 
         <th>
+          Likes
         </th>
+
+        <th>
+          Details
+        </th>
+
       </tr>
+      
+      <% if @public_photos.length() > 0 %>
+        <% @public_photos.each do |a_photo| %>
+        <tr>
 
-      <% @list_of_photos.each do |a_photo| %>
-      <tr>
-        <td>
-          <%= a_photo.id %>
-        </td>
+          <td>
+            <img src="<%= a_photo.image %>">
+          </td>
 
-        <td>
-          <%= a_photo.image %>
-        </td>
+          <td>
+            <%= a_photo.caption %>
+          </td>
 
-        <td>
-          <%= a_photo.owner_id %>
-        </td>
+          <td>
+            <%= a_photo.poster.username %>
+          </td>
 
-        <td>
-          <%= a_photo.likes_count %>
-        </td>
+          <td>
+            <%= time_ago_in_words(a_photo.updated_at) %> ago
+          </td>
 
-        <td>
-          <%= a_photo.comments_count %>
-        </td>
+          <td>
+            <%= a_photo.likes.count() %>
+          </td>
 
-        <td>
-          <%= a_photo.comments_count %>
-        </td>
-
-        <td>
-          <%= a_photo.caption %>
-        </td>
-
-        <td>
-          <%= time_ago_in_words(a_photo.created_at) %> ago
-        </td>
-        <td>
-          <%= time_ago_in_words(a_photo.updated_at) %> ago
-        </td>
-
-        <td>
-          <a href="/photos/<%= a_photo.id %>">
-            Show details
-          </a>
-        </td>
-      </tr>
+          <td>
+            <a href="/photos/<%= a_photo.id %>">
+              Show details
+            </a>
+          </td>
+        </tr>
+        <% end %>
       <% end %>
     </table>
   </div>

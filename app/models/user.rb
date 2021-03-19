@@ -29,6 +29,11 @@ class User < ApplicationRecord
 
   has_secure_password
 
+  has_many(:photos, {
+    :class_name => "Photo",
+    :foreign_key => "owner_id"
+  })
+
   def comments
     return Comment.where({ :author_id => self.id })
   end
