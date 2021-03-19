@@ -52,7 +52,7 @@ class UsersController < ApplicationController
 
     @user = matching_users.at(0)
 
-    if @user.private == false
+    if @user.private == false || @user.id = @current_user.id
       render({ :template => "users/show.html.erb" })
     elsif @user.private == true
       redirect_to("/users", {:alert => "You're not authorized for that."}) 
