@@ -24,12 +24,12 @@
 
   <div>
     <% if @current_user.private == true %>
-      <% check = 1 %>
+      <% check = true %>
     <% else %> 
-      <% check = 0 %>
+      <% check = false %>
     <% end %> 
     <label for="browser_private">Private</label>
-    <input id="browser_private" name="input_private" type="checkbox" value=<%= check %>>
+    <input id="browser_private" name="input_private" type="checkbox" checked=<%= check %>>
   </div>
 
   <button>Update Account</button>

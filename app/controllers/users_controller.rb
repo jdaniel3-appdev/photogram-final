@@ -61,12 +61,7 @@ class UsersController < ApplicationController
     @user.password = params.fetch("input_password")
     @user.password_confirmation = params.fetch("input_password_confirmation")
     @user.username = params.fetch("input_username")
-
-    if params.fetch("input_private") == nil || params.fetch("input_private") == false
-      @user.private = false
-    else 
-      @user.private = params.fetch("input_private")
-    end  
+    @user.private = params.fetch("input_private")  
 
     save_status = @user.save
 
@@ -87,7 +82,7 @@ class UsersController < ApplicationController
     the_user.password = params.fetch("input_password")
     the_user.password_confirmation = params.fetch("input_password_confirmation")
     the_user.username = params.fetch("input_username")
-    the_user.private = params.fetch("input_private", false)
+    the_user.private = params.fetch("input_private")
 
     if the_user.valid?
       the_user.save
