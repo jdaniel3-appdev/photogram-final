@@ -36,7 +36,7 @@ Rails.application.routes.draw do
   post("/modify_like/:path_id", { :controller => "likes", :action => "update" })
   
   # DELETE
-  get("/delete_like/:path_id", { :controller => "likes", :action => "destroy" })
+  get("/delete_like/:like_id", { :controller => "likes", :action => "destroy" })
 
   #------------------------------
 
@@ -71,10 +71,10 @@ Rails.application.routes.draw do
   
   # UPDATE
   
-  post("/modify_photo/:path_id", { :controller => "photos", :action => "update" })
+  post("/modify_photo/:photo_id", { :controller => "photos", :action => "update" })
   
   # DELETE
-  get("/delete_photo/:path_id", { :controller => "photos", :action => "destroy" })
+  get("/delete_photo/:photo_id", { :controller => "photos", :action => "destroy" })
 
   #------------------------------
 
