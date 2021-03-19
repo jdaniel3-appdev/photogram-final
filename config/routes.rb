@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+
+  get("/", { :controller => "users", :action => "index" })
+
   # Routes for the Follow request resource:
 
   # CREATE
@@ -77,20 +80,28 @@ Rails.application.routes.draw do
 
   # Routes for the User resource:
 
+  
+
+  get("/user_sign_up", {:controller => "users", :action => "new_registration_form" })
+  get("/user_sign_out", {:controller => "users", :action => "toast_cookies" })
+  get("/user_sign_in", {:controller => "users", :action => "new_session_form" })
+
+  post("/verify_credentials", {:controller => "users", :action => "authenticate" })
+
   # CREATE
-  post("/insert_user", { :controller => "users", :action => "create" })
+  post("/insert_user_record", { :controller => "users", :action => "create" })
           
   # READ
   get("/users", { :controller => "users", :action => "index" })
   
-  get("/users/:path_id", { :controller => "users", :action => "show" })
+  get("/users/:the_username", { :controller => "users", :action => "show" })
   
   # UPDATE
   
-  post("/modify_user/:path_id", { :controller => "users", :action => "update" })
+  post("/update_user/:the_user_id", { :controller => "users", :action => "update" })
   
   # DELETE
-  get("/delete_user/:path_id", { :controller => "users", :action => "destroy" })
+  get("/delete_user/:the_user_id", { :controller => "users", :action => "destroy" })
 
   #------------------------------
 
