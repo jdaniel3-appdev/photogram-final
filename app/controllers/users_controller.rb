@@ -25,7 +25,7 @@ class UsersController < ApplicationController
   def toast_cookies
     reset_session
     
-    redirect_to("/", {:notice => "See you later!"})
+    redirect_to("/", {:notice => "Signed out successfully"})
   end
 
   def authenticate
@@ -38,7 +38,7 @@ class UsersController < ApplicationController
     else
       if user.authenticate(pw)
         session.store(:user_id, user.id)
-        redirect_to("/", {:notice => "Welcome back, "+ user.username + "!"})
+        redirect_to("/", {:notice => "Signed in successfully"})
       else
         redirect_to("/user_sign_in", {:alert => "Authentication failed"})
       end

@@ -1,157 +1,55 @@
 <div>
   <div>
     <h1>
-      List of all users
+      List of users
     </h1>
   </div>
 </div>
 
 <hr>
-
+  
 <div>
   <div>
-    <h2>
-      Add a new user
-    </h2>
-
-    <form action="/insert_user" method="post">
-      <div>
-        <label for="username_box">
-          Username
-        </label>
-
-        <input type="text" id="username_box" name="query_username">
-      </div>
-
-      <div>
-        <label for="email_box">
-          Email
-        </label>
-
-        <input type="text" id="email_box" name="query_email">
-      </div>
-
-      <div>
-        <label for="password_digest_box">
-          Password digest
-        </label>
-
-        <input type="text" id="password_digest_box" name="query_password_digest">
-      </div>
-
-      <div>
-        <label for="comments_count_box">
-          Comments count
-        </label>
-
-        <input type="text" id="comments_count_box" name="query_comments_count">
-      </div>
-
-      <div>
-        <label for="likes_count_box">
-          Likes count
-        </label>
-
-        <input type="text" id="likes_count_box" name="query_likes_count">
-      </div>
-
-      <div>
-        <input type="checkbox" id="private_box" name="query_private" value="1">
-
-        <label for="private_box">Private</label>
-      </div>
-
-      <button>
-        Create user
-      </button>
-    </form>
-  </div>
-</div>
-
-<hr>
-<div>
-  <div>
-    <table>
+    <table border="1">
       <tr>
         <th>
-          ID
-        </th>
-
-        <th>
           Username
         </th>
 
         <th>
-          Email
+          Private?
         </th>
 
         <th>
-          Password digest
+          Follow
         </th>
 
         <th>
-          Comments count
-        </th>
-
-        <th>
-          Likes count
-        </th>
-
-        <th>
-          Private
-        </th>
-
-        <th>
-          Created at
-        </th>
-
-        <th>
-          Updated at
-        </th>
-
-        <th>
+          Details
         </th>
       </tr>
 
       <% @users.each do |a_user| %>
       <tr>
         <td>
-          <%= a_user.id %>
-        </td>
-
-        <td>
           <%= a_user.username %>
         </td>
 
         <td>
-          <%= a_user.email %>
+          <% if a_user.private == true %>
+            <%= "Yes" %>
+          <% elsif a_user.private == false %>
+            <%= "No" %>
+          <% end %>
+        </td>
+          
+        <td>
+          
         </td>
 
-        <td>
-          <%= a_user.password_digest %>
-        </td>
 
         <td>
-          <%= a_user.comments_count %>
-        </td>
-
-        <td>
-          <%= a_user.likes_count %>
-        </td>
-
-        <td>
-          <%= a_user.private %>
-        </td>
-
-        <td>
-          <%= time_ago_in_words(a_user.created_at) %> ago
-        </td>
-        <td>
-          <%= time_ago_in_words(a_user.updated_at) %> ago
-        </td>
-
-        <td>
-          <a href="/users/<%= a_user.id %>">
+          <a href="/users/<%= a_user.username %>">
             Show details
           </a>
         </td>

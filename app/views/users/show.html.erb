@@ -1,59 +1,10 @@
 <div>
   <div>
     <h1>
-      User #<%= @user.id %> details
+      <%= @user.username %>
     </h1>
 
-    <div>
-      <div>
-        <a href="/users">
-          Go back
-        </a>
-      </div>
-
-      <div>
-        <a href="/delete_user/<%= @user.id %>">
-          Delete user
-        </a>
-      </div>
-    </div>
-
     <dl>
-      <dt>
-        Username
-      </dt>
-      <dd>
-        <%= @user.username %>
-      </dd>
-
-      <dt>
-        Email
-      </dt>
-      <dd>
-        <%= @user.email %>
-      </dd>
-
-      <dt>
-        Password digest
-      </dt>
-      <dd>
-        <%= @user.password_digest %>
-      </dd>
-
-      <dt>
-        Comments count
-      </dt>
-      <dd>
-        <%= @user.comments_count %>
-      </dd>
-
-      <dt>
-        Likes count
-      </dt>
-      <dd>
-        <%= @user.likes_count %>
-      </dd>
-
       <dt>
         Private
       </dt>
@@ -62,18 +13,41 @@
       </dd>
 
       <dt>
-        Created at
+        Followers
       </dt>
       <dd>
-        <%= time_ago_in_words(@user.created_at) %> ago
+        <%= @user.followers.count() %>
       </dd>
 
       <dt>
-        Updated at
+        Following
       </dt>
       <dd>
-        <%= time_ago_in_words(@user.updated_at) %> ago
+        <%= @user.following.count() %>
       </dd>
+
+      <% if @current_user.id == @user.id %>
+        <dt>
+          Edit user
+        </dt>
+        <dd>
+          <form action="/update_user/<%= @current_user.id %>" method="post">
+            <div>
+              <label for="browser_username">Username</label>
+              <input id="browser_username" type="text" name="input_username" value=<%= @current_user.username %>>
+            </div>
+
+            <div>
+              <%= hidden_field_tag :input_private, false %>
+              <label for="browser_private">Private</label>
+              <input id="browser_private" name="input_private" type="checkbox" checked=<%= @current_user.private %>>
+            </div>
+
+            <button>Update user</button>
+          </form>
+        </dd>
+      <% end %>
+
     </dl>
   </div>
 </div>
@@ -84,62 +58,10 @@
 <div>
   <div>
     <h2>
-      Edit user
+      Own photos
     </h2>
 
-    <form action="/modify_user/<%= @user.id %>"  method="post" >
-      <div>
-        <label for="username_box">
-          Username
-        </label>
-
-        <input type="text" id="username_box" name="query_username" value="<%= @user.username %>">
-      </div>
-
-      <div>
-        <label for="email_box">
-          Email
-        </label>
-
-        <input type="text" id="email_box" name="query_email" value="<%= @user.email %>">
-      </div>
-
-      <div>
-        <label for="password_digest_box">
-          Password digest
-        </label>
-
-        <input type="text" id="password_digest_box" name="query_password_digest" value="<%= @user.password_digest %>">
-      </div>
-
-      <div>
-        <label for="comments_count_box">
-          Comments count
-        </label>
-
-        <input type="text" id="comments_count_box" name="query_comments_count" value="<%= @user.comments_count %>">
-      </div>
-
-      <div>
-        <label for="likes_count_box">
-          Likes count
-        </label>
-
-        <input type="text" id="likes_count_box" name="query_likes_count" value="<%= @user.likes_count %>">
-      </div>
-
-      <div>
-        <input type="checkbox" id="private_box" name="query_private" value="1" <%= "checked" if @user.private %>>
-
-        <label for="private_box">
-            Private
-        </label>
-      </div>
-
-      <button>
-        Update user
-      </button>
-    </form>
+    
   </div>
 </div>
 
